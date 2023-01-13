@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Box from "@mui/material/Box";
 import commonS from "common/styles/CommonStyles.module.scss"
 import {HotelSearch} from "./hotel-search/HotelSearch";

@@ -1,8 +1,7 @@
 export const PATH = {
-    // DEFAULT: '/',
+    DEFAULT: '/',
     LOGIN: "/login",
-
-    MAIN_PAGE: "/",
+    MAIN_PAGE: "/main",
 
     NOT_FOUND: "*"
 }
