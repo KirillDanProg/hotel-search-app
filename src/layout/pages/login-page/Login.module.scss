@@ -1,28 +1,6 @@
 @import "../../../common/styles/mixins.scss";
+@import "../../../common/styles/vars";
 
-.loginTitle {
-  align-self: center;
-
-  font-size: 24px;
-  font-weight: 300;
-  line-height: 28px;
-}
-
-.formContainer {
-  @include flexContainer(column, 32px);
-
-  .formItemContainer {
-    @include flexContainer(column, 5px);
-
-    label {
-      font-weight: 300;
-      font-size: 16px;
-      line-height: 19px;
-      color: #424242;
-    }
-  }
-
-}
 
 
 

@@ -1,21 +1,25 @@
 import React from 'react';
 import {Box, Typography} from "@mui/material";
-import {boxStyle, buttonStyle} from "common/styles";
-import bgImage from "../../../assets/images/bg-img.png"
+import {boxStyle} from "common/styles";
+import bgImage from "assets/images/bg-img.png"
 import {LoginForm} from "./form/LoginForm";
-import s from "./Login.module.scss"
+import commonS from "common/styles/CommonStyles.module.scss"
+import { useAppSelector } from 'common/hooks/redux-hooks';
+import {useRedirectTo} from "common/hooks/useRedirectTo";
+import {PATH} from "layout/routes/routes";
+import {selectUserLogin} from "app/selectors";
 
 export const LoginPage = () => {
 
-    // const isAuth = useAppSelector(state => state);
-    // useRedirectTo(PATH.MAIN_PAGE, !!isAuth, [isAuth]);
+    const isAuth = useAppSelector(selectUserLogin);
+    useRedirectTo(PATH.MAIN_PAGE, !!isAuth, [isAuth]);
 
     return (
         <Box sx={loginPageStyle}>
             <Box sx={bgStyle}></Box>
             <Box sx={boxStyle}>
                 <Typography component={"h2"}
-                            className={s.loginTitle}>
+                            className={commonS.logo}>
                     Simple Hotel Check
                 </Typography>
                 <LoginForm/>

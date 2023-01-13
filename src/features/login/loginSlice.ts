@@ -1,19 +1,30 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState, AppThunk } from "../../app/store";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export interface CounterState {
-  value: number;
-  status: "idle" | "loading" | "failed";
+    login: string | null
+    error: string | null
+    status: "idle" | "loading" | "failed";
 }
 
 export const initialState: CounterState = {
-  value: 0,
-  status: "idle",
+    login: null,
+    error: null,
+    status: "idle",
 };
 
 export const loginSlice = createSlice({
-  name: "login",
-  initialState,
-  reducers: {},
-  extraReducers: (builder) => {},
+    name: "login",
+    initialState,
+    reducers: {
+        login: (state, action: PayloadAction<string>) => {
+            state.login = action.payload
+        },
+        logout: (state) => {
+            state.login = null
+        }
+    },
 });
+
+export const {login, logout} = loginSlice.actions
+
+
