@@ -1,5 +1,12 @@
-@mixin flexContainer($direction, $gap){
+@mixin flexContainer($direction, $gap) {
   display: flex;
   flex-direction: $direction;
   gap: $gap;
+}
+
+@mixin font($weight, $size, $lineHeight) {
+  font-weight: $weight;
+  font-size: $size;
+  line-height: $lineHeight;
+  letter-spacing: -0.4px;
 }

@@ -1,0 +1,88 @@
+@import "../../../common/styles/mixins";
+@import "../../../common/styles/vars";
+
+.subTitle {
+  @include font(500, 24px, 28px);
+}
+
+.flexContainer {
+  @include flexContainer(row, 32px);
+
+  .sideFlexItem {
+    @include flexContainer(column, 32px);
+    width: 30%;
+
+    .sortControllersContainer {
+      .sortControllers {
+        display: flex;
+        gap: 8px;
+
+        .sortItem {
+          @include flexContainer(row, 0);
+          justify-content: center;
+
+          border: 0.5px solid gray;
+          border-radius: 5px;
+          padding: 3px 6px;
+        }
+      }
+    }
+  }
+
+  .mainFlexItem {
+    @include flexContainer(row, 0);
+    width: 100%;
+  }
+}
+
+
+.hotelsContainer {
+  width: 100%;
+
+  .hotelDataItemContainer {
+    position: relative;
+    padding: 24px 0;
+    border-bottom: 1px solid #87878733;
+
+    @include flexContainer(column, 8px);
+
+    .hotelName {
+      @include font(300, 17px, 22px);
+    }
+
+    .date {
+      @include flexContainer(row, 8px);
+      @include font(300, 14px, 22px);
+      color: $textColorLight;
+    }
+
+    .rateAndPriceContainer {
+      @include flexContainer(row, 0);
+      justify-content: space-between;
+
+      .price {
+        @include flexContainer(row, 5px);
+        align-items: baseline;
+        @include font(400, 17px, 22px);
+        color: $textColor;
+
+        span {
+          @include font(300, 11px, 22px);
+        }
+      }
+    }
+
+    .favIcon {
+      position: absolute;
+      top: 0;
+      right: 0;
+
+    }
+  }
+
+}
+
+.hotelsContainer > :nth-last-child(1) {
+  border-bottom: none;
+}
+

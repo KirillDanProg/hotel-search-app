@@ -2,11 +2,11 @@ import React from 'react';
 import { Navigate, Outlet } from "react-router-dom";
 import Box from "@mui/material/Box";
 import {PATH} from "./routes/routes";
+import {selectUserLogin} from "../app/selectors";
+import {useAppSelector} from "../common/hooks/redux-hooks";
 
 export const ProtectedComponents = () => {
-    // const isAuth = useAppSelector(selectCurrentUser);
-    // const isAuth = useAppSelector(selectCurrentUser);
-    const isAuth = false
+    const isAuth = useAppSelector(selectUserLogin);
 
     return (
         <Box component={"main"} sx={AppContainerStyle} >
@@ -22,5 +22,4 @@ export const ProtectedComponents = () => {
 const AppContainerStyle = {
     position: "relative",
     minHeight: "100vh",
-    backgroundColor: "red",
 }

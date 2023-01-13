@@ -1,0 +1,16 @@
+@import "../../common/styles/vars.scss";
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    padding: 0 40px;
+    text-transform: uppercase;
+    color: $textColorLight;
+
+    .logoutButton {
+        align-self: center;
+        color: $textColorLight
+    }
+
+}
