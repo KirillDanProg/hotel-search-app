@@ -7,12 +7,12 @@ import commonS from "common/styles/CommonStyles.module.scss"
 import { useAppSelector } from 'common/hooks/redux-hooks';
 import {useRedirectTo} from "common/hooks/useRedirectTo";
 import {PATH} from "layout/routes/routes";
-import {selectUserLogin} from "app/selectors";
+import {selectIsAuth} from "app/selectors";
 
 export const LoginPage = () => {
 
-    const isAuth = useAppSelector(selectUserLogin);
-    useRedirectTo(PATH.MAIN_PAGE, !!isAuth, [isAuth]);
+    const isAuth = useAppSelector(selectIsAuth);
+    useRedirectTo(PATH.MAIN_PAGE, isAuth, [isAuth]);
 
     return (
         <Box sx={loginPageStyle}>
