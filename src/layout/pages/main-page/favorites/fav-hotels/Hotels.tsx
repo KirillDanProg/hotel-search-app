@@ -5,19 +5,21 @@ import {HotelDataItem} from "./HotelDataItem";
 import {useFetchHotelsQuery} from "../../../../../features/hotels/hotelsAPI";
 import {useQueryParams} from "../../../../../common/hooks/useQueryParams";
 import {getUrlParams} from "../../../../../common/utils/getUrlParams copy";
+import {SkeletonContainer, SkeletonItem} from "../../../../../common/components/preloader/SkeletonItem";
 
 export const Hotels = () => {
 
     const [searchParams] = useQueryParams()
     const params = getUrlParams(searchParams)
-    const {data} = useFetchHotelsQuery(params)
-
+    const {data, isLoading} = useFetchHotelsQuery(params)
     const checkIn = searchParams.get("checkIn") || String(new Date().toUTCString().slice(0, 16))
 
     return (
         <Box className={s.hotelsContainer}>
             {
-              data && data.map(hotel => {
+                isLoading
+                    ? <SkeletonContainer />
+                    : data && data.map(hotel => {
                     return (
                         <HotelDataItem key={hotel.hotelId}
                                        data={hotel}
@@ -26,6 +28,7 @@ export const Hotels = () => {
                     )
                 })
             }
+
         </Box>
     );
 };
