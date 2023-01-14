@@ -4,12 +4,23 @@ import {IconButton, Rating, Typography} from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import s from "../../Main.module.scss"
 import {HotelResponseType} from "features/hotels/hotelsAPI";
+import {useAppDispatch, useAppSelector} from "common/hooks/redux-hooks";
+import {addHotelToFavorites} from "features/hotels/hotelsSlice";
+import {selectFavoritesHotels} from "app/selectors";
 
 type PropsType = {
     data: HotelResponseType
     checkIn: string
 }
 export const HotelDataItem: FC<PropsType> = ({data, checkIn}) => {
+    const dispatch = useAppDispatch()
+    const favoritesHotelsIds = useAppSelector(selectFavoritesHotels)
+    const addHotelToFavorite = () => {
+        dispatch(addHotelToFavorites(data.hotelId))
+    }
+
+    const activeColor = favoritesHotelsIds.includes(data.hotelId)
+
     return (
         <Box className={s.hotelDataItemContainer}>
             <Typography className={s.hotelName}>
@@ -28,8 +39,8 @@ export const HotelDataItem: FC<PropsType> = ({data, checkIn}) => {
                 </Typography>
             </Box>
 
-            <IconButton className={s.favIcon}>
-                <FavoriteIcon style={{fill: "#E55858"}}/>
+            <IconButton onClick={addHotelToFavorite} className={s.favIcon}>
+                <FavoriteIcon style={ activeColor ? { fill: "#E55858"} : {fill : "#00000080"} }/>
             </IconButton>
         </Box>
     )

@@ -1,7 +1,7 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 
 export const hotelsAPI = createApi({
-    reducerPath: 'api',
+    reducerPath: 'hotelsApi',
     baseQuery: fetchBaseQuery({
         baseUrl: "https://engine.hotellook.com/api/v2/",
     }),
@@ -13,8 +13,7 @@ export const hotelsAPI = createApi({
                 method: "GET",
                 params
             })
-        })
-
+        }),
     }),
 })
 
@@ -48,4 +47,5 @@ export type ParamsType = {
     adults?: string
     lookFor?: "city" | "hotel" | "both"
     limit?: string
+    hotelId?: string
 }
