@@ -16,7 +16,7 @@ export const HotelSearch = () => {
     const [searchHotels, {isLoading}] = useLazyFetchHotelsQuery()
     //дата заезда из query parameter URL или установить текущую дату
     const today = searchParams.get("checkIn") || new Date().toISOString().slice(0, 10)
-    const tomorrow = today.slice(0, 8) + Number(new Date().getDate() + 1)
+    const tomorrow = searchParams.get("checkOut") || today.slice(0, 8) + Number(new Date().getDate() + 1)
 
     //todo fix ref type
     const ref = useRef<any>(null)
