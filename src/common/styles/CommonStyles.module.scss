@@ -24,9 +24,11 @@
 
 .formContainer {
   @include flexContainer(column, 32px);
+  width: 100%;
 
   .formItemContainer {
     @include flexContainer(column, 5px);
+    position: relative;
 
     label {
       @include font(300, 16px, 19px);

@@ -33,13 +33,19 @@ export const loginSlice = createSlice({
     },
     extraReducers: builder => {
         builder
+            .addCase(authMe.pending, (state) => {
+                state.status = "loading"
+            })
             .addCase(authMe.fulfilled, (state) => {
                 state.isAuth = true
+                state.status = "idle"
             })
             .addCase(authMe.rejected, (state, {payload}) => {
                 state.isAuth = false
                 state.error = payload as string
+                state.status = "failed"
             })
+
     }
 });
 

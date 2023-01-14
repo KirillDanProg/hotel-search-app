@@ -18,7 +18,7 @@ export const hotelsAPI = createApi({
     }),
 })
 
-export const { useFetchHotelsQuery } = hotelsAPI
+export const { useFetchHotelsQuery, useLazyFetchHotelsQuery } = hotelsAPI
 
 export type HotelResponseType = {
     location: LocationType

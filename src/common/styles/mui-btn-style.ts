@@ -6,7 +6,7 @@ export const buttonStyle = {
     padding: "7px",
     gap: "10px",
 
-    width: "296px",
+    maxWidth: "296px",
     height: "50px",
     color: "#fff",
     background: "linear-gradient(104.34deg, #41522E -15.34%, #BE8022 145.95%)",

@@ -4,31 +4,48 @@ import {boxStyle, buttonStyle} from "common/styles";
 import {InputLabelForm} from "../../login-page/form/InputLabelForm";
 import commonS from "common/styles/CommonStyles.module.scss";
 import Button from "@mui/material/Button";
-import {useEffect} from "react";
-import {useQueryParams} from "../../../../common/hooks/useQueryParams";
+import {useEffect, useRef} from "react";
+import {useQueryParams} from "common/hooks/useQueryParams";
+import CloseIcon from '@mui/icons-material/Close'
+import {getUrlParams} from "common/utils/getUrlParams copy";
+import {useLazyFetchHotelsQuery} from "features/hotels/hotelsAPI";
 
 export const HotelSearch = () => {
     const [searchParams, setParams] = useQueryParams()
+    const location = searchParams.get("location") || "Moscow"
+    const [searchHotels, {isLoading}] = useLazyFetchHotelsQuery()
     //дата заезда из query parameter URL или установить текущую дату
-    const dateToday = searchParams.get("checkIn") || new Date().toISOString().slice(0, 10)
-    const dateTomorrow = dateToday.slice(0, 8) + Number(new Date().getDate() + 1)
+    const today = searchParams.get("checkIn") || new Date().toISOString().slice(0, 10)
+    const tomorrow = today.slice(0, 8) + Number(new Date().getDate() + 1)
 
-    const {touched, errors, handleChange, handleSubmit, values} = useFormik({
+    //todo fix ref type
+    const ref = useRef<any>(null)
+
+    const {touched, errors, handleChange, handleSubmit, values, setFieldValue} = useFormik({
         initialValues: {
-            location: "Moscow",
-            checkIn: dateToday,
-            amountOfDays: 1
+            location,
+            checkIn: today,
+            checkOut: tomorrow
         },
         // validationSchema,
-        onSubmit: values => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit: (values) => {
+            setParams("location", values.location)
+            setParams("checkIn", values.checkIn)
+            setParams("checkOut", values.checkOut)
+            const params = getUrlParams(searchParams)
+            searchHotels(params)
         },
     });
 
+    const cleanField = () => {
+        setFieldValue("location", "")
+        ref.current.focus()
+    }
+
     useEffect(() => {
         setParams("location", values.location)
-        setParams("checkIn", dateToday)
-        setParams("checkOut", String(dateTomorrow))
+        setParams("checkIn", today)
+        setParams("checkOut", String(tomorrow))
     }, [])
 
     return (
@@ -41,6 +58,8 @@ export const HotelSearch = () => {
                                 error={errors.location}
                                 touched={touched.location}
                                 onChange={handleChange}
+                                icon={<CloseIcon onClick={cleanField} sx={iconStyle}/>}
+                                ref={ref}
                 />
                 <InputLabelForm id={"checkIn"}
                                 type={"date"}
@@ -49,18 +68,30 @@ export const HotelSearch = () => {
                                 error={errors.checkIn}
                                 touched={touched.checkIn}
                                 onChange={handleChange}
+                                min={today}
                 />
-                <InputLabelForm id={"amountOfDays"}
-                                type={"number"}
-                                value={values.amountOfDays}
-                                htmlFor={"Amount of days"}
-                                error={errors.amountOfDays}
-                                touched={touched.amountOfDays}
+                <InputLabelForm id={"checkOut"}
+                                type={"date"}
+                                value={values.checkOut}
+                                htmlFor={"Check-out"}
+                                error={errors.checkOut}
+                                touched={touched.checkOut}
                                 onChange={handleChange}
+                                min={tomorrow}
                 />
                 <Button type="submit" sx={buttonStyle}>search</Button>
             </Box>
 
         </Box>
     )
+}
+
+
+const iconStyle = {
+    position: "absolute",
+    top: "37px",
+    right: "5px",
+    opacity: "0.5",
+    fontSize: "20px",
+    cursor: "pointer"
 }

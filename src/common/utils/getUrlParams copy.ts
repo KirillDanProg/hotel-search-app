@@ -4,7 +4,7 @@ export type ParamsType = {
   checkOut: string
   [key: string]: string | string[]
 }
-export const getUrlParams = (searchParams: URLSearchParams) => {
+export const getUrlParams = (searchParams: URLSearchParams): ParamsType => {
 
   const params = {} as ParamsType;
 
