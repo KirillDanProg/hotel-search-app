@@ -4,8 +4,15 @@ import {Breadcrumbs, Link, Typography} from "@mui/material";
 import ArrowForward from "@mui/icons-material/ArrowForward";
 import {Hotels} from "../favorites/fav-hotels/Hotels";
 import {Slider} from "../slider/Slider";
+import {useQueryParams} from "../../../../common/hooks/useQueryParams";
+import {getFormattedDate} from "../../../../common/utils/getFormattedDate";
+import s from "../Main.module.scss"
 
 export const HotelsContent = () => {
+    const [searchParams] = useQueryParams()
+    const date = searchParams.get("checkIn") || getFormattedDate(new Date, "toISOString")
+    const city = searchParams.get("location") || "Moscow"
+
     return (
         // todo: fix inline styles
         <Box sx={boxStyle} style={{width: "100%"}}>
@@ -14,11 +21,11 @@ export const HotelsContent = () => {
                 aria-label="breadcrumb"
             >
                 <Link>Hotels</Link>
-                <Link>Moscow</Link>
+                <Link>{city}</Link>
             </Breadcrumbs>
 
-            <Typography component={"p"}>
-                07 Jule 2020
+            <Typography className={s.dateOfCheckIn} component={"p"}>
+                {getFormattedDate(date, "toUTCString")}
             </Typography>
 
             {/*<Slider/>*/}

@@ -9,15 +9,15 @@ import {useQueryParams} from "common/hooks/useQueryParams";
 import CloseIcon from '@mui/icons-material/Close'
 import {getUrlParams} from "common/utils/getUrlParams copy";
 import {useLazyFetchHotelsQuery} from "features/hotels/hotelsAPI";
+import {getFormattedDate} from "../../../../common/utils/getFormattedDate";
 
 export const HotelSearch = () => {
     const [searchParams, setParams] = useQueryParams()
     const location = searchParams.get("location") || "Moscow"
     const [searchHotels, {isLoading}] = useLazyFetchHotelsQuery()
     //дата заезда из query parameter URL или установить текущую дату
-    const today = searchParams.get("checkIn") || new Date().toISOString().slice(0, 10)
+    const today = searchParams.get("checkIn") || getFormattedDate(new Date, "toISOString")
     const tomorrow = searchParams.get("checkOut") || today.slice(0, 8) + Number(new Date().getDate() + 1)
-
     //todo fix ref type
     const ref = useRef<any>(null)
 
@@ -46,6 +46,8 @@ export const HotelSearch = () => {
         setParams("location", values.location)
         setParams("checkIn", today)
         setParams("checkOut", String(tomorrow))
+        const params = getUrlParams(searchParams)
+        searchHotels(params)
     }, [])
 
     return (

@@ -12,12 +12,27 @@ export const hotelsAPI = createApi({
                 url: "cache.json",
                 method: "GET",
                 params
-            })
+            }),
+            // todo: sorting hotels for main fetching in <Hotels/> component
+            // transformResponse(returnValue: HotelResponseType[], meta, arg) {
+            //     switch (arg.sort) {
+            //         case "priceAsc":
+            //             return returnValue.sort((a, b) => a.priceFrom - b.priceFrom)
+            //         case "priceDesc":
+            //             return returnValue.sort((a, b) => b.priceFrom - a.priceFrom)
+            //         case "rateAsc":
+            //             return returnValue.sort((a, b) => a.stars - b.stars)
+            //         case "rateDesc":
+            //             return returnValue.sort((a, b) => b.stars - a.stars)
+            //         default:
+            //             return returnValue
+            //     }
+            // }
         }),
     }),
 })
 
-export const { useFetchHotelsQuery, useLazyFetchHotelsQuery } = hotelsAPI
+export const {useFetchHotelsQuery, useLazyFetchHotelsQuery} = hotelsAPI
 
 export type HotelResponseType = {
     location: LocationType
@@ -48,4 +63,5 @@ export type ParamsType = {
     lookFor?: "city" | "hotel" | "both"
     limit?: string
     hotelId?: string
+    sort?: string
 }

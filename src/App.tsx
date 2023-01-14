@@ -7,20 +7,23 @@ import {ProtectedComponents} from "./layout/ProtectedComponents";
 import {MainPage} from "./layout/pages/main-page/MainPage";
 import {useAppDispatch, useAppSelector} from "./common/hooks/redux-hooks";
 import {authMe} from "./features/login/loginSlice";
-import {selectAppStatus} from "./app/selectors";
+import {selectAppError, selectAppStatus} from "./app/selectors";
 import {Preloader} from "./common/components/preloader/Preloader";
 import {useCustomComponentWillMount} from "./common/hooks/useCustomComponentWillMount";
+import {ErrorSnackbar} from "./common/components/snackbar/ErrorSnackbar";
 
 
 function App() {
     const dispatch = useAppDispatch()
     const status = useAppSelector(selectAppStatus)
+    const error = useAppSelector(selectAppError)
     useCustomComponentWillMount(() => {
         dispatch(authMe())
     })
 
     return (
         <BrowserRouter>
+            {error && <ErrorSnackbar errorMessage={error}/>}
             {
                 status === "loading"
                     ? <Preloader/>
