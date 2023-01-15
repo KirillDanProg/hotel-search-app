@@ -13,13 +13,12 @@ export const SkeletonItem = () => {
         </Box>
     )
 }
-export const SkeletonContainer = () => {
+export const SkeletonContainer = (props: { n?: number }) => {
     return (
         <>
-            <SkeletonItem/>
-            <SkeletonItem/>
-            <SkeletonItem/>
-            <SkeletonItem/>
+           <SkeletonItem/>
+           <SkeletonItem/>
+           <SkeletonItem/>
         </>
     );
 

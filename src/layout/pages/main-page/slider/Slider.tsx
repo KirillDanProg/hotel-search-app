@@ -51,9 +51,9 @@ export function Carousel() {
                 easing="linear"
             >
                 {
-                    images.map(img => {
+                    images.map((img, i) => {
                         return (
-                            <HotelImage urlImage={img.url}/>
+                            <HotelImage key={ i + img.url} urlImage={img.url}/>
                         )
                     })
                 }

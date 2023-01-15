@@ -34,10 +34,15 @@ export const hotelsSlice = createSlice({
             state.data = {...state.data, ...payload}
         },
         addHotelDataToFav: (state, action: PayloadAction<HotelResponseType>) => {
-            state.favoritesHotelsData.push(action.payload)
+            if(state.favoritesHotelsData) {
+                state.favoritesHotelsData.push(action.payload)
+            }
         },
         resetError: (state) => {
             state.error = null
+        },
+        resetFavoritesHotelsData: (state) => {
+            state.favoritesHotelsData = []
         }
     },
     extraReducers: builder => {
@@ -62,6 +67,7 @@ export const hotelsSlice = createSlice({
             .addMatcher(
                 (action): action is GenericAsyncThunk => action.type.endsWith("/rejected"),
                 (state, {payload}) => {
+                    debugger
                     if (typeof payload === "object") {
                         state.error = payload.data.message
                         state.status = "failed";
@@ -81,7 +87,7 @@ export const hotelsSlice = createSlice({
     }
 });
 
-export const {setData, addHotelDataToFav, resetError} = hotelsSlice.actions
+export const {setData, addHotelDataToFav, resetError, resetFavoritesHotelsData} = hotelsSlice.actions
 export type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>
 
 type DataType = {

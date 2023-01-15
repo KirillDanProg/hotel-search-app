@@ -1,7 +1,6 @@
 @mixin flexContainer($direction, $gap) {
   display: flex;
   flex-direction: $direction;
-  align-self: start;
   gap: $gap;
 }
 

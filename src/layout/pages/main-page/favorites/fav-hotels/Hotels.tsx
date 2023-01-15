@@ -8,10 +8,10 @@ import {getUrlParams} from "common/utils/getUrlParams copy";
 import {SkeletonContainer} from "common/components/preloader/SkeletonItem";
 import {EmptyListMessage} from "common/components/EmptyListMessage";
 import {getFormattedDate} from "common/utils/getFormattedDate";
-import {getAmountOfDays} from "../../../../../common/utils/getAmountOfDays";
-import {useAppDispatch, useAppSelector} from "../../../../../common/hooks/redux-hooks";
-import {selectHotelData} from "../../../../../app/selectors";
-import {setData} from "../../../../../features/hotels/hotelsSlice";
+import {getAmountOfDays} from "common/utils/getAmountOfDays";
+import {useAppDispatch, useAppSelector} from "common/hooks/redux-hooks";
+import {selectHotelData} from "app/selectors";
+import {setData} from "features/hotels/hotelsSlice";
 
 export const Hotels = () => {
     const amountOfDays = useAppSelector(selectHotelData).amountOfDays
@@ -26,6 +26,7 @@ export const Hotels = () => {
                                                                   data={hotel}
                                                                   checkIn={checkIn}
                                                                   amountOfDays={amountOfDays}
+                                                                  withImg
     />)
 
     useEffect(() => {

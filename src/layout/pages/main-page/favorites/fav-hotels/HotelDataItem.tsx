@@ -13,8 +13,9 @@ type PropsType = {
     data: HotelResponseType
     checkIn: string
     amountOfDays?: number
+    withImg?: boolean
 }
-export const HotelDataItem: FC<PropsType> = ({data, checkIn, amountOfDays}) => {
+export const HotelDataItem: FC<PropsType> = ({data, checkIn, amountOfDays, withImg}) => {
     const dispatch = useAppDispatch()
     const favoritesHotelsIds = useAppSelector(selectFavoritesHotels)
     const addHotelToFavorite = () => {
@@ -25,8 +26,10 @@ export const HotelDataItem: FC<PropsType> = ({data, checkIn, amountOfDays}) => {
 
     return (
         <Box className={s.hotelDataItemContainer}>
-            <Box component={"img"} src={defaultHotelImg} sx={defaultImgStyle}></Box>
-            <Box>
+            {
+                withImg && <Box component={"img"} src={defaultHotelImg} sx={defaultImgStyle}></Box>
+            }
+            <Box sx={{width: "100%"}}>
                 <Typography className={s.hotelName}>
                     {data.hotelName}
                 </Typography>
@@ -37,7 +40,7 @@ export const HotelDataItem: FC<PropsType> = ({data, checkIn, amountOfDays}) => {
                 </Typography>
 
                 <Box className={s.rateAndPriceContainer}>
-                    <Rating name="simple-controlled" value={data.stars}/>
+                    <Rating name="simple-controlled" value={data.stars} readOnly/>
                     <Typography className={s.price}>
                         <span>price:</span>{/*todo: fix: currency*/}{data.priceFrom} &#x24;
                     </Typography>
