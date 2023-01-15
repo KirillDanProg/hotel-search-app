@@ -10,11 +10,14 @@ import CloseIcon from '@mui/icons-material/Close'
 import {getUrlParams} from "common/utils/getUrlParams copy";
 import {useLazyFetchHotelsQuery} from "features/hotels/hotelsAPI";
 import {getFormattedDate} from "../../../../common/utils/getFormattedDate";
+import {setData} from "../../../../features/hotels/hotelsSlice";
+import {useAppDispatch} from "../../../../common/hooks/redux-hooks";
 
 export const HotelSearch = () => {
+    const dispatch = useAppDispatch()
     const [searchParams, setParams] = useQueryParams()
     const location = searchParams.get("location") || "Moscow"
-    const [searchHotels, {isLoading}] = useLazyFetchHotelsQuery()
+    const [searchHotels] = useLazyFetchHotelsQuery()
     //дата заезда из query parameter URL или установить текущую дату
     const today = searchParams.get("checkIn") || getFormattedDate(new Date, "toISOString")
     const tomorrow = searchParams.get("checkOut") || today.slice(0, 8) + Number(new Date().getDate() + 1)
@@ -28,12 +31,13 @@ export const HotelSearch = () => {
             checkOut: tomorrow
         },
         // validationSchema,
-        onSubmit: (values) => {
-            setParams("location", values.location)
-            setParams("checkIn", values.checkIn)
-            setParams("checkOut", values.checkOut)
+        onSubmit: ({checkIn, checkOut, location}) => {
+            setParams("location", location)
+            setParams("checkIn", checkIn)
+            setParams("checkOut", checkOut)
             const params = getUrlParams(searchParams)
             searchHotels(params)
+            dispatch(setData({checkIn, checkOut}))
         },
     });
 

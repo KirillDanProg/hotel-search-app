@@ -4,6 +4,7 @@ import {getFromLocalStorage, saveToLocalStorage} from "../../common/utils/local-
 
 
 export const initialState = {
+    data: {} as CheckInOutDataType,
     favoritesHotels: [] as number[],
     error: null as string | null,
     status: "idle" as AppStatusType
@@ -11,7 +12,7 @@ export const initialState = {
 
 export const addHotelToFavorites = createAsyncThunk("hotels/addHotelToFavorites", (arg: number) => {
     const dataFromLocalStorage = getFromLocalStorage("userData")
-    let favoritesHotels = []
+    let favoritesHotels: number[]
     if (dataFromLocalStorage.favoritesHotels.includes(arg)) {
         favoritesHotels = dataFromLocalStorage.favoritesHotels.filter((el: number) => el !== arg)
     } else {
@@ -25,12 +26,8 @@ export const hotelsSlice = createSlice({
     name: "hotels",
     initialState,
     reducers: {
-        addToFavorites: (state, action: PayloadAction<number>) => {
-            if (state.favoritesHotels.includes(action.payload)) {
-                state.favoritesHotels = state.favoritesHotels.filter(el => el !== action.payload)
-            } else {
-                state.favoritesHotels.push(action.payload)
-            }
+        setData: (state, {payload}:PayloadAction<CheckInOutDataType>) => {
+            state.data = {...state.data, ...payload}
         }
     },
     extraReducers: builder => {
@@ -70,5 +67,12 @@ export const hotelsSlice = createSlice({
     }
 });
 
-export const {addToFavorites} = hotelsSlice.actions
+export const {setData} = hotelsSlice.actions
 export type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>
+
+type DataType = {
+    checkIn: string
+    checkOut: string
+    amountOfDays: number
+}
+type CheckInOutDataType = Partial<DataType>

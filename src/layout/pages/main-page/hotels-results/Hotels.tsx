@@ -10,7 +10,7 @@ import s from "../Main.module.scss"
 
 export const HotelsContent = () => {
     const [searchParams] = useQueryParams()
-    const date = searchParams.get("checkIn") || getFormattedDate(new Date, "toISOString")
+    const checkInDate = searchParams.get("checkIn") || getFormattedDate(new Date, "toISOString")
     const city = searchParams.get("location") || "Moscow"
 
     return (
@@ -25,7 +25,7 @@ export const HotelsContent = () => {
             </Breadcrumbs>
 
             <Typography className={s.dateOfCheckIn} component={"p"}>
-                {getFormattedDate(date, "toUTCString")}
+                {getFormattedDate(checkInDate, "toUTCString")}
             </Typography>
 
             {/*<Slider/>*/}

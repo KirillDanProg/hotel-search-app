@@ -32,7 +32,7 @@ export const SortControllers = () => {
                             sx={sortLabelStyle}
                             className={s.sortItem}
                             onClick={() => sortHotelsHandler("rate")}
-                            disabled={favoritesHotels.length < 1}
+                            disabled={favoritesHotels.length < 2}
             >
                 Rate
             </TableSortLabel
@@ -43,7 +43,7 @@ export const SortControllers = () => {
                             sx={sortLabelStyle}
                             className={s.sortItem}
                             onClick={() => sortHotelsHandler("price")}
-                            disabled={favoritesHotels.length < 1}
+                            disabled={favoritesHotels.length < 2}
             >
                 Price
             </TableSortLabel>

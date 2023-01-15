@@ -8,7 +8,7 @@ import {useFetchHotelsQuery} from "features/hotels/hotelsAPI";
 import {useQueryParams} from "common/hooks/useQueryParams";
 import {getUrlParams} from "common/utils/getUrlParams copy";
 import {useAppSelector} from "common/hooks/redux-hooks";
-import {selectFavoritesHotels} from "app/selectors";
+import {selectFavoritesHotels, selectHotelData} from "app/selectors";
 import {HotelDataItem} from "./fav-hotels/HotelDataItem";
 import {EmptyListMessage} from "common/components/EmptyListMessage";
 import {getFormattedDate} from "common/utils/getFormattedDate";
@@ -16,10 +16,10 @@ import {getFormattedDate} from "common/utils/getFormattedDate";
 export const Favorites = () => {
     const [searchParams] = useQueryParams()
     const params = getUrlParams(searchParams)
+    const amountOfDays = useAppSelector(selectHotelData).amountOfDays
     const favoritesHotelsIds = useAppSelector(selectFavoritesHotels)
     const {data = []} = useFetchHotelsQuery(params)
     const checkIn = searchParams.get("checkIn") || String(getFormattedDate(new Date, "toUTCString"))
-
     const sortBy = searchParams.get("sort")
     let sortedData = [...data]
 
@@ -41,7 +41,7 @@ export const Favorites = () => {
     }
 
     const mappedHotels = sortedData.map(hotel => favoritesHotelsIds.includes(hotel.hotelId)
-        ? <HotelDataItem key={hotel.hotelId} data={hotel} checkIn={checkIn}/>
+        ? <HotelDataItem key={hotel.hotelId} data={hotel} checkIn={checkIn} amountOfDays={amountOfDays}/>
         : "")
 
     return (

@@ -11,8 +11,9 @@ import {selectFavoritesHotels} from "app/selectors";
 type PropsType = {
     data: HotelResponseType
     checkIn: string
+    amountOfDays?: number
 }
-export const HotelDataItem: FC<PropsType> = ({data, checkIn}) => {
+export const HotelDataItem: FC<PropsType> = ({data, checkIn, amountOfDays}) => {
     const dispatch = useAppDispatch()
     const favoritesHotelsIds = useAppSelector(selectFavoritesHotels)
     const addHotelToFavorite = () => {
@@ -29,7 +30,7 @@ export const HotelDataItem: FC<PropsType> = ({data, checkIn}) => {
             <Typography className={s.date}>
                 <span>{checkIn}</span>
                 -
-                <span>1 day</span>
+                <span>{amountOfDays} day</span>
             </Typography>
 
             <Box className={s.rateAndPriceContainer}>
