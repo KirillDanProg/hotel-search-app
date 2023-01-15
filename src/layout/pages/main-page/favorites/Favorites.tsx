@@ -12,13 +12,14 @@ import {selectFavoritesHotels, selectHotelData} from "app/selectors";
 import {HotelDataItem} from "./fav-hotels/HotelDataItem";
 import {EmptyListMessage} from "common/components/EmptyListMessage";
 import {getFormattedDate} from "common/utils/getFormattedDate";
+import {SkeletonContainer} from "../../../../common/components/preloader/SkeletonItem";
 
 export const Favorites = () => {
     const [searchParams] = useQueryParams()
     const params = getUrlParams(searchParams)
     const amountOfDays = useAppSelector(selectHotelData).amountOfDays
     const favoritesHotelsIds = useAppSelector(selectFavoritesHotels)
-    const {data = []} = useFetchHotelsQuery(params)
+    const {data = [], isLoading} = useFetchHotelsQuery(params)
     const checkIn = searchParams.get("checkIn") || String(getFormattedDate(new Date, "toUTCString"))
     const sortBy = searchParams.get("sort")
     let sortedData = [...data]
@@ -55,10 +56,12 @@ export const Favorites = () => {
             <SortControllers/>
 
             <Box className={s.hotelsContainer}>
+
                 {
-                    favoritesHotelsIds.length > 0
-                        ? mappedHotels
-                        : <EmptyListMessage message={"no favorites hotels yet"}/>
+                    isLoading ? <SkeletonContainer/>
+                        : favoritesHotelsIds.length > 0
+                            ? mappedHotels
+                            : <EmptyListMessage message={"no favorites hotels yet"}/>
                 }
             </Box>
         </Box>

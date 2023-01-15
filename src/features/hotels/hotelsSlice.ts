@@ -1,11 +1,13 @@
 import {AsyncThunk, createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AppStatusType, authMe} from "../login/loginSlice";
 import {getFromLocalStorage, saveToLocalStorage} from "../../common/utils/local-storage copy";
+import {images} from "../../data/images";
 
 
 export const initialState = {
     data: {} as CheckInOutDataType,
     favoritesHotels: [] as number[],
+    hotelsImages: images,
     error: null as string | null,
     status: "idle" as AppStatusType
 };

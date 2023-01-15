@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import App from "./App";
 import "./assets/fonts/Roboto/Roboto-Black.ttf";
-import "./App.css"
+import "./App.scss"
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);

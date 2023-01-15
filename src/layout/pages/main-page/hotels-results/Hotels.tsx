@@ -3,10 +3,10 @@ import {boxStyle} from "../../../../common/styles";
 import {Breadcrumbs, Link, Typography} from "@mui/material";
 import ArrowForward from "@mui/icons-material/ArrowForward";
 import {Hotels} from "../favorites/fav-hotels/Hotels";
-import {Slider} from "../slider/Slider";
 import {useQueryParams} from "../../../../common/hooks/useQueryParams";
 import {getFormattedDate} from "../../../../common/utils/getFormattedDate";
 import s from "../Main.module.scss"
+import {Carousel} from "../slider/Slider";
 
 export const HotelsContent = () => {
     const [searchParams] = useQueryParams()
@@ -28,7 +28,7 @@ export const HotelsContent = () => {
                 {getFormattedDate(checkInDate, "toUTCString")}
             </Typography>
 
-            {/*<Slider/>*/}
+            <Carousel/>
 
             <Hotels/>
 

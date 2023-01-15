@@ -1,43 +1,86 @@
+import {useState} from 'react';
+import ReactSimplyCarousel from 'react-simply-carousel';
+import {useAppSelector} from "../../../../common/hooks/redux-hooks";
+import {selectHotelsImages} from "../../../../app/selectors";
+import Box from "@mui/material/Box";
+import "App.scss"
 
-import img from "assets/images/arbisoftimages-200737-1_suite_hotelthenewalgarb_galeria-image.jpg"
-import {Carousel} from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+export function Carousel() {
+    const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
+    const images = useAppSelector(selectHotelsImages)
 
-const images = [
-    {
-        label: 'San Francisco – Oakland Bay Bridge, United States',
-        imgPath: img,
-    },
-    {
-        label: 'Bird',
-        imgPath: img,
-    },
-    {
-        label: 'Bali, Indonesia',
-        imgPath: img,
-    },
-    {
-        label: 'Goč, Serbia',
-        imgPath: img,
-    },
-];
+    return (
+        <div style={{width: "100%"}}>
+            <ReactSimplyCarousel
+                activeSlideIndex={activeSlideIndex}
+                onRequestChange={setActiveSlideIndex}
+                itemsToShow={1}
+                itemsToScroll={1}
+                forwardBtnProps={{
+                    className: "carouselBtnController",
+                    children: <span>{`>`}</span>,
+                }}
+                backwardBtnProps={{
+                    className: "carouselBtnController",
+                    children: <span>{`<`}</span>,
+                }}
+                containerProps={{
+                    className: "carouselContainer",
+                }}
+                responsiveProps={[
+                    {
+                        itemsToShow: 4,
+                        itemsToScroll: 1,
+                        minWidth: 1081,
+                    },
+                    {
+                        itemsToShow: 3,
+                        itemsToScroll: 1,
+                        minWidth: 801,
+                        maxWidth: 1080
+                    },
+                    {
+                        itemsToShow: 2,
+                        itemsToScroll: 1,
+                        minWidth: 600,
+                        maxWidth: 800
+                    },
+                ]}
+                speed={400}
+                easing="linear"
+            >
+                {
+                    images.map(img => {
+                        return (
+                            <HotelImage urlImage={img.url}/>
+                        )
+                    })
+                }
+            </ReactSimplyCarousel>
+        </div>
+    );
+}
 
-export function Slider() {
-   return(
-       <Carousel autoFocus={true} showThumbs={false} showStatus={false} useKeyboardArrows  className="presentation-mode" width="300px">
-           <div >
-               <img src={img} />
-               <p className="legend">Legend 1</p>
-           </div>
-           <div >
-               <img src={img} />
-               <p className="legend">Legend 2</p>
-           </div>
-           <div >
-               <img src={img} />
-               <p className="legend">Legend 3</p>
-           </div>
-       </Carousel>
-   )
+const HotelImage = (props: { urlImage: string }) => {
+    const imgStyle = {
+        width: "150px",
+
+        height: "100px",
+        backgroundImage: `url(${props.urlImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        borderRadius: "10px"
+    }
+    const imgContainerStyle = {
+        padding: "5px",
+    }
+
+    return (
+        <Box sx={imgContainerStyle}>
+            <Box sx={imgStyle}>
+            </Box>
+        </Box>
+    )
 }
