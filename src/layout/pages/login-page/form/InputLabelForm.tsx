@@ -8,10 +8,12 @@ export const InputLabelForm = forwardRef<null, PropsType>(({error, touched, html
             <input
                 ref={ref}
                 {...restProps}
-                className={commonS.input}
+                className={`${commonS.input} ${error && touched && commonS.error}`}
                 autoComplete={"off"}
             />
-            {error && touched && error}
+            <div className={commonS.error}>
+                {error && touched && error}
+            </div>
             {restProps.icon}
         </div>
     );

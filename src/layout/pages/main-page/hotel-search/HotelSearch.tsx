@@ -12,6 +12,11 @@ import {useLazyFetchHotelsQuery} from "features/hotels/hotelsAPI";
 import {getFormattedDate} from "../../../../common/utils/getFormattedDate";
 import {setData} from "../../../../features/hotels/hotelsSlice";
 import {useAppDispatch} from "../../../../common/hooks/redux-hooks";
+import * as yup from "yup";
+
+const validationSchema = yup.object().shape({
+    location: yup.string().required('Required'),
+});
 
 export const HotelSearch = () => {
     const dispatch = useAppDispatch()
@@ -30,7 +35,7 @@ export const HotelSearch = () => {
             checkIn: today,
             checkOut: tomorrow
         },
-        // validationSchema,
+        validationSchema,
         onSubmit: ({checkIn, checkOut, location}) => {
             setParams("location", location)
             setParams("checkIn", checkIn)

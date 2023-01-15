@@ -7,6 +7,7 @@ import {HotelResponseType} from "features/hotels/hotelsAPI";
 import {useAppDispatch, useAppSelector} from "common/hooks/redux-hooks";
 import {addHotelToFavorites} from "features/hotels/hotelsSlice";
 import {selectFavoritesHotels} from "app/selectors";
+import defaultHotelImg from "assets/images/defaultHotelImage.png"
 
 type PropsType = {
     data: HotelResponseType
@@ -24,25 +25,34 @@ export const HotelDataItem: FC<PropsType> = ({data, checkIn, amountOfDays}) => {
 
     return (
         <Box className={s.hotelDataItemContainer}>
-            <Typography className={s.hotelName}>
-                {data.hotelName}
-            </Typography>
-            <Typography className={s.date}>
-                <span>{checkIn}</span>
-                -
-                <span>{amountOfDays} day</span>
-            </Typography>
-
-            <Box className={s.rateAndPriceContainer}>
-                <Rating name="simple-controlled" value={data.stars}/>
-                <Typography className={s.price}>
-                    <span>price:</span>{/*todo: fix: currency*/}{data.priceFrom} &#x24;
+            <Box component={"img"} src={defaultHotelImg} sx={defaultImgStyle}></Box>
+            <Box>
+                <Typography className={s.hotelName}>
+                    {data.hotelName}
                 </Typography>
-            </Box>
+                <Typography className={s.date}>
+                    <span>{checkIn}</span>
+                    -
+                    <span>{amountOfDays} day</span>
+                </Typography>
 
-            <IconButton onClick={addHotelToFavorite} className={s.favIcon}>
-                <FavoriteIcon style={ activeColor ? { fill: "#E55858"} : {fill : "#00000080"} }/>
-            </IconButton>
+                <Box className={s.rateAndPriceContainer}>
+                    <Rating name="simple-controlled" value={data.stars}/>
+                    <Typography className={s.price}>
+                        <span>price:</span>{/*todo: fix: currency*/}{data.priceFrom} &#x24;
+                    </Typography>
+                </Box>
+
+                <IconButton onClick={addHotelToFavorite} className={s.favIcon}>
+                    <FavoriteIcon style={activeColor ? {fill: "#E55858"} : {fill: "#00000080"}}/>
+                </IconButton>
+            </Box>
         </Box>
     )
+}
+
+const defaultImgStyle = {
+    width: "80px",
+    borderRadius: "5px",
+    alignSelf: "center"
 }
