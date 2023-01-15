@@ -2,11 +2,13 @@ import {AsyncThunk, createAsyncThunk, createSlice, PayloadAction} from "@reduxjs
 import {AppStatusType, authMe} from "../login/loginSlice";
 import {getFromLocalStorage, saveToLocalStorage} from "../../common/utils/local-storage copy";
 import {images} from "../../data/images";
+import {HotelResponseType} from "./hotelsAPI";
 
 
 export const initialState = {
     data: {} as CheckInOutDataType,
     favoritesHotels: [] as number[],
+    favoritesHotelsData: [] as HotelResponseType[],
     hotelsImages: images,
     error: null as string | null,
     status: "idle" as AppStatusType
@@ -28,8 +30,14 @@ export const hotelsSlice = createSlice({
     name: "hotels",
     initialState,
     reducers: {
-        setData: (state, {payload}:PayloadAction<CheckInOutDataType>) => {
+        setData: (state, {payload}: PayloadAction<CheckInOutDataType>) => {
             state.data = {...state.data, ...payload}
+        },
+        addHotelDataToFav: (state, action: PayloadAction<HotelResponseType>) => {
+            state.favoritesHotelsData.push(action.payload)
+        },
+        resetError: (state) => {
+            state.error = null
         }
     },
     extraReducers: builder => {
@@ -54,9 +62,13 @@ export const hotelsSlice = createSlice({
             .addMatcher(
                 (action): action is GenericAsyncThunk => action.type.endsWith("/rejected"),
                 (state, {payload}) => {
-                    debugger
-                    state.status = "failed";
-                    state.error = payload
+                    if (typeof payload === "object") {
+                        state.error = payload.data.message
+                        state.status = "failed";
+                    } else {
+                        state.status = "failed";
+                        state.error = payload
+                    }
                 }
             )
             .addMatcher(
@@ -69,7 +81,7 @@ export const hotelsSlice = createSlice({
     }
 });
 
-export const {setData} = hotelsSlice.actions
+export const {setData, addHotelDataToFav, resetError} = hotelsSlice.actions
 export type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>
 
 type DataType = {

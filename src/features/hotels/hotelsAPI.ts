@@ -29,10 +29,17 @@ export const hotelsAPI = createApi({
             //     }
             // }
         }),
+        fetchHotel: build.query<HotelResponseType[], ParamsType>({
+            query: (params) => ({
+                url: "cache.json",
+                method: "GET",
+                params
+            }),
+        }),
     }),
 })
 
-export const {useFetchHotelsQuery, useLazyFetchHotelsQuery} = hotelsAPI
+export const {useFetchHotelsQuery, useLazyFetchHotelsQuery, useLazyFetchHotelQuery} = hotelsAPI
 
 export type HotelResponseType = {
     location: LocationType
@@ -55,7 +62,7 @@ type LocationType = {
 }
 
 export type ParamsType = {
-    location: string
+    location?: string
     checkIn: string
     checkOut: string
     hotel?: string

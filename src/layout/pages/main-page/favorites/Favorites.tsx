@@ -1,28 +1,43 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Box from "@mui/material/Box";
 import {boxStyle} from "../../../../common/styles";
 import {Typography} from "@mui/material";
 import s from "../Main.module.scss"
 import {SortControllers} from "./sort-controlers/SortControllers";
-import {useFetchHotelsQuery} from "features/hotels/hotelsAPI";
+import {HotelResponseType, useLazyFetchHotelQuery} from "features/hotels/hotelsAPI";
 import {useQueryParams} from "common/hooks/useQueryParams";
-import {getUrlParams} from "common/utils/getUrlParams copy";
-import {useAppSelector} from "common/hooks/redux-hooks";
-import {selectFavoritesHotels, selectHotelData} from "app/selectors";
+import {useAppDispatch, useAppSelector} from "common/hooks/redux-hooks";
+import {selectFavoritesHotels, selectFavoritesHotelsData, selectHotelData} from "app/selectors";
 import {HotelDataItem} from "./fav-hotels/HotelDataItem";
 import {EmptyListMessage} from "common/components/EmptyListMessage";
 import {getFormattedDate} from "common/utils/getFormattedDate";
-import {SkeletonContainer} from "../../../../common/components/preloader/SkeletonItem";
+import {SkeletonContainer} from "common/components/preloader/SkeletonItem";
+import {addHotelDataToFav} from "features/hotels/hotelsSlice";
 
 export const Favorites = () => {
+    const dispatch = useAppDispatch()
+    const favoritesHotelsData = useAppSelector(selectFavoritesHotelsData)
     const [searchParams] = useQueryParams()
-    const params = getUrlParams(searchParams)
-    const amountOfDays = useAppSelector(selectHotelData).amountOfDays
     const favoritesHotelsIds = useAppSelector(selectFavoritesHotels)
-    const {data = [], isLoading} = useFetchHotelsQuery(params)
     const checkIn = searchParams.get("checkIn") || String(getFormattedDate(new Date, "toUTCString"))
+    const [fetchHotel, {isLoading}] = useLazyFetchHotelQuery()
+    useEffect(() => {
+        favoritesHotelsIds.forEach(async (hotelId) => {
+            const params = {
+                hotelId: String(hotelId),
+                checkIn: "2023-01-16",
+                checkOut: "2023-01-17"
+            }
+            const data: any = await fetchHotel(params)
+            if ( data ) {
+                dispatch(addHotelDataToFav(data.data))
+            }
+        })
+    }, [])
+
+    const amountOfDays = useAppSelector(selectHotelData).amountOfDays
     const sortBy = searchParams.get("sort")
-    let sortedData = [...data]
+    let sortedData = [...favoritesHotelsData]
 
     if (sortBy) {
         switch (sortBy) {
@@ -41,7 +56,7 @@ export const Favorites = () => {
         }
     }
 
-    const mappedHotels = sortedData.map(hotel => favoritesHotelsIds.includes(hotel.hotelId)
+    const mappedHotels = sortedData.map((hotel: any) => favoritesHotelsIds.includes(hotel.hotelId)
         ? <HotelDataItem key={hotel.hotelId} data={hotel} checkIn={checkIn} amountOfDays={amountOfDays}/>
         : "")
 
@@ -67,3 +82,14 @@ export const Favorites = () => {
         </Box>
     );
 };
+
+// type ResponseType = {
+//     status: QueryStatus;
+//     originalArgs?: any;
+//     data?: HotelResponseType;
+//     error?: any;
+//     requestId?: any;
+//     endpointName?: any | undefined;
+//     startedTimeStamp?: any;
+//     fulfilledTimeStamp?: any;
+// }
