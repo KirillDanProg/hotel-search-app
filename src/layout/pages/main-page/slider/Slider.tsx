@@ -37,14 +37,13 @@ export function Carousel() {
                     {
                         itemsToShow: 3,
                         itemsToScroll: 1,
-                        minWidth: 801,
-                        maxWidth: 1080
+                        minWidth: 1080,
+                        maxWidth: 1300
                     },
                     {
                         itemsToShow: 2,
                         itemsToScroll: 1,
-                        minWidth: 600,
-                        maxWidth: 800
+                        maxWidth: 500
                     },
                 ]}
                 speed={400}

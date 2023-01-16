@@ -4,6 +4,8 @@
 .container {
   width: 80%;
   margin: 0 auto;
+
+
 }
 
 .input {
@@ -16,11 +18,13 @@
   border: 1px solid #C9CACC;
   border-radius: 4px;
 }
+
 .error {
   border-color: $errorColor;
   text-align: start;
   color: $errorColor
 }
+
 .logo {
   @include font(300, 24px, 28px);
   align-self: center;
@@ -38,6 +42,14 @@
       @include font(300, 16px, 19px);
       color: $textColorLight
     }
+  }
+
+}
+
+
+@media screen and (max-width: $desktop) {
+  .container {
+    width: 95%;
   }
 
 }
