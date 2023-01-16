@@ -21,5 +21,5 @@ export const ProtectedComponents = () => {
 
 const AppContainerStyle = {
     position: "relative",
-    minHeight: "100vh",
+    maxHeight: "100vh",
 }

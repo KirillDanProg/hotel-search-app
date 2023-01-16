@@ -1,37 +1,73 @@
+import React, {useEffect, useRef} from 'react';
 import Box from "@mui/material/Box";
-import {boxStyle} from "../../../../common/styles";
-import {Breadcrumbs, Link, Typography} from "@mui/material";
-import ArrowForward from "@mui/icons-material/ArrowForward";
-import {Hotels} from "../favorites/fav-hotels/Hotels";
-import {useQueryParams} from "../../../../common/hooks/useQueryParams";
-import {getFormattedDate} from "../../../../common/utils/getFormattedDate";
-import s from "../Main.module.scss"
-import {Carousel} from "../slider/Slider";
+import s from "../Main.module.scss";
+import {HotelDataItem} from "../favorites/fav-hotels/HotelDataItem";
+import {useFetchHotelsQuery} from "features/hotels/hotelsAPI";
+import {useQueryParams} from "common/hooks/useQueryParams";
+import {getUrlParams} from "common/utils/getUrlParams copy";
+import {SkeletonContainer} from "common/components/preloader/SkeletonItem";
+import {EmptyListMessage} from "common/components/EmptyListMessage";
+import {getFormattedDate} from "common/utils/getFormattedDate";
+import {getAmountOfDays} from "common/utils/getAmountOfDays";
+import {useAppDispatch, useAppSelector} from "common/hooks/redux-hooks";
+import {selectHotelData} from "app/selectors";
+import {setData} from "features/hotels/hotelsSlice";
+import InfiniteScroll from "react-infinite-scroll-component";
+import {Preloader} from "common/components/preloader/Preloader";
 
-export const HotelsContent = () => {
-    const [searchParams] = useQueryParams()
-    const checkInDate = searchParams.get("checkIn") || getFormattedDate(new Date, "toISOString")
-    const city = searchParams.get("location") || "Moscow"
+export const Hotels = () => {
+    const amountOfDays = useAppSelector(selectHotelData).amountOfDays
+    const dispatch = useAppDispatch()
+    const [searchParams, setParams] = useQueryParams()
+    const params = getUrlParams(searchParams)
+    const {data, isLoading} = useFetchHotelsQuery(params)
+    const checkIn = searchParams.get("checkIn") || String(getFormattedDate(new Date, "toUTCString"))
+    const checkOut = searchParams.get("checkOut") || String(getFormattedDate(new Date, "toUTCString"))
+    const limit = searchParams.get("limit") || "5"
+
+    const loadMoreHandler = () => {
+        setParams("limit", String(+limit + 10))
+    }
+
+    const mappedHotels = data && data.map(hotel => <HotelDataItem key={hotel.hotelId}
+                                                                  data={hotel}
+                                                                  checkIn={checkIn}
+                                                                  amountOfDays={amountOfDays}
+                                                                  withImg
+    />)
+
+    useEffect(() => {
+        const amountOfDays = getAmountOfDays(checkIn, checkOut)
+        dispatch(setData({amountOfDays}))
+    }, [checkIn, checkOut])
+
+    const ref = useRef(null)
+
+    useEffect(() => {
+
+    })
+
 
     return (
-        // todo: fix inline styles
-        <Box sx={boxStyle} style={{width: "100%"}}>
-            <Breadcrumbs
-                separator={<ArrowForward fontSize="small"/>}
-                aria-label="breadcrumb"
-            >
-                <Link>Hotels</Link>
-                <Link>{city}</Link>
-            </Breadcrumbs>
+        <InfiniteScroll
+            height={"60vh"}
+            dataLength={mappedHotels && mappedHotels.length || 5}
+            next={loadMoreHandler}
+            hasMore={true}
+            loader={<Preloader pure/>}
+            className={s.scrollContainer}
+        >
+            <Box ref={ref} sx={{alignSelf: "start"}} className={s.hotelsContainer}>
 
-            <Typography className={s.dateOfCheckIn} component={"p"}>
-                {getFormattedDate(checkInDate, "toUTCString")}
-            </Typography>
+                {
+                    isLoading
+                        ? <SkeletonContainer/>
+                        : data && data.length > 0 ?
+                            mappedHotels
+                            : <EmptyListMessage message="no results"/>
+                }
+            </Box>
+        </InfiniteScroll>
+    );
+};
 
-            <Carousel/>
-
-            <Hotels/>
-
-        </Box>
-    )
-}

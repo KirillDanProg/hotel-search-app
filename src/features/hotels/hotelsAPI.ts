@@ -9,7 +9,7 @@ export const hotelsAPI = createApi({
     endpoints: (build) => ({
         fetchHotels: build.query<HotelResponseType[], ParamsType>({
             query: (params) => ({
-                url: "cache.json",
+                url: `cache.json`,
                 method: "GET",
                 params
             }),

@@ -1,13 +1,21 @@
 import * as React from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import {FC} from "react";
 
-export const Preloader = () => {
-  return (
-    <Box sx={styles}>
-      <CircularProgress />
-    </Box>
-  );
+type PropsType = {
+    pure?: boolean
+}
+export const Preloader: FC<PropsType> = ({pure}) => {
+    return <>
+        {
+            pure
+                ? <CircularProgress  sx={{position: "relative", left: "50%"}}/>
+                : <Box sx={styles}>
+                    <CircularProgress/>
+                </Box>
+        }
+    </>
 }
 
 const styles = {

@@ -34,9 +34,14 @@
   }
 }
 
+.scrollContainer {
+
+}
 
 .hotelsContainer {
   width: 100%;
+  padding-right: 20px;
+  align-self: stretch;
 
   .hotelDataItemContainer {
     @include flexContainer(row, 18px);

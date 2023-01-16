@@ -67,7 +67,6 @@ export const hotelsSlice = createSlice({
             .addMatcher(
                 (action): action is GenericAsyncThunk => action.type.endsWith("/rejected"),
                 (state, {payload}) => {
-                    debugger
                     if (typeof payload === "object") {
                         state.error = payload.data.message
                         state.status = "failed";

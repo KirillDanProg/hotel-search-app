@@ -55,6 +55,7 @@ export const HotelSearch = () => {
         setParams("location", values.location)
         setParams("checkIn", today)
         setParams("checkOut", String(tomorrow))
+        setParams("limit", "6")
         const params = getUrlParams(searchParams)
         searchHotels(params)
     }, [])

@@ -72,7 +72,7 @@ export const Favorites = () => {
 
             <SortControllers/>
 
-            <Box className={s.hotelsContainer}>
+            <Box className={s.hotelsContainer} sx={{alignSelf: "flex-start"}} >
                 {
                     isFetching ? <SkeletonContainer n={favoritesHotelsIds.length}/>
                         : favoritesHotelsIds.length > 0

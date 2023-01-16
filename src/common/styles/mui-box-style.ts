@@ -1,9 +1,7 @@
 export const boxStyle = {
     display: "flex",
     flexDirection: "column",
-    alignItems: "flex-start",
     gap: "20px",
-
     padding: " 18px 24px",
 
     background: "#FFFFFF",
