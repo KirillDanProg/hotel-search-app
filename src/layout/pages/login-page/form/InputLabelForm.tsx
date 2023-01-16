@@ -1,7 +1,7 @@
 import React, {ChangeEvent, forwardRef, MutableRefObject, ReactElement} from 'react';
 import commonS from "common/styles/CommonStyles.module.scss";
 
-export const InputLabelForm = forwardRef<null, PropsType>(({error, touched, htmlFor, ...restProps}, ref) => {
+export const InputLabelForm = forwardRef<HTMLInputElement, PropsType>(({error, touched, htmlFor, ...restProps}, ref) => {
     return (
         <div className={commonS.formItemContainer}>
             <label htmlFor={htmlFor}>{htmlFor}</label>

@@ -9,13 +9,15 @@ import {useQueryParams} from "common/hooks/useQueryParams";
 import CloseIcon from '@mui/icons-material/Close'
 import {getUrlParams} from "common/utils/getUrlParams copy";
 import {useLazyFetchHotelsQuery} from "features/hotels/hotelsAPI";
-import {getFormattedDate} from "../../../../common/utils/getFormattedDate";
-import {setData} from "../../../../features/hotels/hotelsSlice";
-import {useAppDispatch} from "../../../../common/hooks/redux-hooks";
+import {getFormattedDate} from "common/utils/getFormattedDate";
+import {setData} from "features/hotels/hotelsSlice";
+import {useAppDispatch} from "common/hooks/redux-hooks";
 import * as yup from "yup";
 
 const validationSchema = yup.object().shape({
     location: yup.string().required('Required'),
+    checkOut: yup.date()
+        .when("checkIn", (checkIn, schema) => checkIn && schema.min(checkIn))
 });
 
 export const HotelSearch = () => {
@@ -26,8 +28,7 @@ export const HotelSearch = () => {
     //дата заезда из query parameter URL или установить текущую дату
     const today = searchParams.get("checkIn") || getFormattedDate(new Date, "toISOString")
     const tomorrow = searchParams.get("checkOut") || today.slice(0, 8) + Number(new Date().getDate() + 1)
-    //todo fix ref type
-    const ref = useRef<any>(null)
+    const ref = useRef<HTMLInputElement>(null)
 
     const {touched, errors, handleChange, handleSubmit, values, setFieldValue} = useFormik({
         initialValues: {
@@ -48,7 +49,7 @@ export const HotelSearch = () => {
 
     const cleanField = () => {
         setFieldValue("location", "")
-        ref.current.focus()
+       ref.current && ref.current.focus()
     }
 
     useEffect(() => {
