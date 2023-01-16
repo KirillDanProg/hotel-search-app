@@ -1,14 +1,11 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {getFromLocalStorage, removeFromLocalStorage, saveToLocalStorage} from "../../common/utils/local-storage copy";
 import {v4} from "uuid"
-import {GenericAsyncThunk} from "../hotels/hotelsSlice";
-
-// export type InitialStateType = typeof initialState
 
 export const initialState = {
     userData: {} as UserDataType,
     isAuth: false,
-    error: "",
+    error: null as string | null,
     status: "idle" as AppStatusType,
 };
 
@@ -45,23 +42,11 @@ export const loginSlice = createSlice({
                 state.error = payload as string
                 state.status = "failed"
             })
-            .addMatcher(
-                (action): action is GenericAsyncThunk => action.type.endsWith("/rejected"),
-                (state, {payload}) => {
-                    if (typeof payload === "object") {
-                        state.error = payload.data.message
-                        state.status = "failed";
-                    } else {
-                        state.status = "failed";
-                        state.error = payload
-                    }
-                }
-            )
     }
 });
 
 export const authMe = createAsyncThunk("auth/me", (arg, thunkAPI) => {
-    const userData: {id: string} = getFromLocalStorage("userData")
+    const userData: { id: string } = getFromLocalStorage("userData")
     if (userData) {
         return userData
     }

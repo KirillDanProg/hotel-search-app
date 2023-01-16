@@ -4,7 +4,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import {FC} from "react";
 import {useAppDispatch} from "../../hooks/redux-hooks";
-import {resetError} from "../../../features/hotels/hotelsSlice";
+import {resetError} from "features/appSlice";
 
 
 type PropsType = {

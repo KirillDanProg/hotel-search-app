@@ -20,7 +20,7 @@ export const Hotels = () => {
     const dispatch = useAppDispatch()
     const [searchParams, setParams] = useQueryParams()
     const params = getUrlParams(searchParams)
-    const {data, isLoading} = useFetchHotelsQuery(params)
+    const {data, isLoading, isError} = useFetchHotelsQuery(params)
     const location = searchParams.get("location")
     const checkIn = searchParams.get("checkIn") || String(getFormattedDate(new Date, "toUTCString"))
     const checkOut = searchParams.get("checkOut") || String(getFormattedDate(new Date, "toUTCString"))
@@ -56,7 +56,7 @@ export const Hotels = () => {
             dataLength={mappedHotels && mappedHotels.length || 5}
             next={loadMoreHandler}
             hasMore={true}
-            loader={<Preloader pure/>}
+            loader={!isError && <Preloader pure/>}
             className={s.scrollContainer}
         >
             <Box ref={ref} sx={{alignSelf: "start"}} className={s.hotelsContainer}>

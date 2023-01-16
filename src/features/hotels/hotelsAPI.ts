@@ -5,7 +5,6 @@ export const hotelsAPI = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: "https://engine.hotellook.com/api/v2/",
     }),
-    tagTypes: ["Hotels"],
     endpoints: (build) => ({
         fetchHotels: build.query<HotelResponseType[], ParamsType>({
             query: (params) => ({
@@ -13,21 +12,6 @@ export const hotelsAPI = createApi({
                 method: "GET",
                 params
             }),
-            // todo: sorting hotels for main fetching in <Hotels/> component
-            // transformResponse(returnValue: HotelResponseType[], meta, arg) {
-            //     switch (arg.sort) {
-            //         case "priceAsc":
-            //             return returnValue.sort((a, b) => a.priceFrom - b.priceFrom)
-            //         case "priceDesc":
-            //             return returnValue.sort((a, b) => b.priceFrom - a.priceFrom)
-            //         case "rateAsc":
-            //             return returnValue.sort((a, b) => a.stars - b.stars)
-            //         case "rateDesc":
-            //             return returnValue.sort((a, b) => b.stars - a.stars)
-            //         default:
-            //             return returnValue
-            //     }
-            // }
         }),
         fetchHotel: build.query<HotelResponseType[], ParamsType>({
             query: (params) => ({

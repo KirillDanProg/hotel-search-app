@@ -2,7 +2,7 @@ import {RootState} from "./store";
 import {createSelector} from "@reduxjs/toolkit";
 
 export const selectIsAuth = (state: RootState) => state.auth.isAuth;
-export const selectAppError = (state: RootState) => state.auth.error
+export const selectAppError = (state: RootState) => state.app.error
 export const selectAppStatus = (state: RootState) => state.auth.status
 
 export const selectFavoritesHotels = (state: RootState) => state.hotels.favoritesHotels

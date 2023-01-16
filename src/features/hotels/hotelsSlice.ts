@@ -34,12 +34,9 @@ export const hotelsSlice = createSlice({
             state.data = {...state.data, ...payload}
         },
         addHotelDataToFav: (state, action: PayloadAction<HotelResponseType>) => {
-            if(state.favoritesHotelsData) {
+            if (state.favoritesHotelsData) {
                 state.favoritesHotelsData.push(action.payload)
             }
-        },
-        resetError: (state) => {
-            state.error = null
         },
         resetFavoritesHotelsData: (state) => {
             state.favoritesHotelsData = []
@@ -57,36 +54,10 @@ export const hotelsSlice = createSlice({
             .addCase(addHotelToFavorites.fulfilled, (state, {payload}) => {
                 state.favoritesHotels = payload
             })
-            .addMatcher(
-                (action): action is GenericAsyncThunk => action.type.endsWith("/pending"),
-                (state) => {
-                    state.status = "loading";
-                    state.error = null;
-                }
-            )
-            .addMatcher(
-                (action): action is GenericAsyncThunk => action.type.endsWith("/rejected"),
-                (state, {payload}) => {
-                    if (typeof payload === "object") {
-                        state.error = payload.data.message
-                        state.status = "failed";
-                    } else {
-                        state.status = "failed";
-                        state.error = payload
-                    }
-                }
-            )
-            .addMatcher(
-                (action): action is GenericAsyncThunk => action.type.endsWith("/fulfilled"),
-                (state) => {
-                    state.status = "idle";
-                    state.error = null;
-                }
-            )
     }
 });
 
-export const {setData, addHotelDataToFav, resetError, resetFavoritesHotelsData} = hotelsSlice.actions
+export const {setData, addHotelDataToFav, resetFavoritesHotelsData} = hotelsSlice.actions
 export type GenericAsyncThunk = AsyncThunk<unknown, unknown, any>
 
 type DataType = {

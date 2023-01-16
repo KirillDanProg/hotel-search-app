@@ -2,9 +2,11 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import {loginSlice} from "../features/login/loginSlice";
 import {hotelsAPI} from "../features/hotels/hotelsAPI";
 import {hotelsSlice} from "../features/hotels/hotelsSlice";
+import {appSlice} from "../features/appSlice";
 
 export const store = configureStore({
   reducer: {
+    app: appSlice.reducer,
     auth: loginSlice.reducer,
     hotels: hotelsSlice.reducer,
     [hotelsAPI.reducerPath]: hotelsAPI.reducer
