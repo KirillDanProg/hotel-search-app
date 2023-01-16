@@ -21,14 +21,15 @@ export const Hotels = () => {
     const [searchParams, setParams] = useQueryParams()
     const params = getUrlParams(searchParams)
     const {data, isLoading} = useFetchHotelsQuery(params)
+    const location = searchParams.get("location")
     const checkIn = searchParams.get("checkIn") || String(getFormattedDate(new Date, "toUTCString"))
     const checkOut = searchParams.get("checkOut") || String(getFormattedDate(new Date, "toUTCString"))
     const limit = searchParams.get("limit") || "5"
+    const ref = useRef<HTMLInputElement>(null)
 
     const loadMoreHandler = () => {
         setParams("limit", String(+limit + 10))
     }
-
     const mappedHotels = data && data.map(hotel => <HotelDataItem key={hotel.hotelId}
                                                                   data={hotel}
                                                                   checkIn={checkIn}
@@ -41,11 +42,12 @@ export const Hotels = () => {
         dispatch(setData({amountOfDays}))
     }, [checkIn, checkOut])
 
-    const ref = useRef(null)
 
     useEffect(() => {
-
-    })
+        if (ref.current) {
+            ref && ref.current.scrollIntoView()
+        }
+    }, [location])
 
 
     return (
