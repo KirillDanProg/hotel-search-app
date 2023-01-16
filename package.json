@@ -1,6 +1,16 @@
 {
   "name": "hotel-search-app",
-  "version": "0.1.0",
+  "web": "hotel-search-app.vercel.app",
+  "version": "1.0.0",
+  "author": {
+    "name": "Kirill Vychuzhanin",
+    "email": "kirill2898v@gmail.com",
+    "web": "vn-react-portfolio.vercel.app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KirillDanProg/hotel-search-app"
+  },
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
