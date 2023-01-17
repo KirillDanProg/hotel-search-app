@@ -15,6 +15,7 @@ type PropsType = {
     amountOfDays?: number
     withImg?: boolean
 }
+
 export const HotelDataItem: FC<PropsType> = ({data, checkIn, amountOfDays, withImg}) => {
     const dispatch = useAppDispatch()
     const favoritesHotelsIds = useAppSelector(selectFavoritesHotels)

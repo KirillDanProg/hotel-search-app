@@ -10,7 +10,6 @@ import Box from "@mui/material/Box";
 import s from "../Main.module.scss";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-
 export const Hotels = () => {
     const amountOfDays = useAppSelector(selectHotelData).amountOfDays
     const dispatch = useAppDispatch()
@@ -34,7 +33,7 @@ export const Hotels = () => {
     />)
 
     useEffect(() => {
-        const amountOfDays = getAmountOfDays(checkIn, checkOut)
+        const amountOfDays = getAmountOfDays(checkIn, checkOut, "yyyy-mm-dd")
         dispatch(setData({amountOfDays}))
     }, [checkIn, checkOut])
 
