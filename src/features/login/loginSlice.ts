@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {getFromLocalStorage, removeFromLocalStorage, saveToLocalStorage} from "../../common/utils/local-storage copy";
+import {getFromLocalStorage, removeFromLocalStorage, saveToLocalStorage} from "common/utils";
 import {v4} from "uuid"
 
 export const initialState = {

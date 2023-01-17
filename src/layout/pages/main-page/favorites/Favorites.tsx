@@ -1,18 +1,17 @@
 import React, {useEffect} from 'react';
-import Box from "@mui/material/Box";
-import {boxStyle} from "../../../../common/styles";
+import {boxStyle} from "common/styles";
 import {Typography} from "@mui/material";
-import s from "../Main.module.scss"
-import {SortControllers} from "./sort-controlers/SortControllers";
-import { useLazyFetchHotelQuery} from "features/hotels/hotelsAPI";
-import {useQueryParams} from "common/hooks/useQueryParams";
-import {useAppDispatch, useAppSelector} from "common/hooks/redux-hooks";
+import {getFormattedDate} from "common/utils";
+import {useLazyFetchHotelQuery} from "features/hotels/hotelsAPI";
 import {memoizedHotelsIds, selectFavoritesHotelsData, selectHotelData} from "app/selectors";
-import {HotelDataItem} from "./fav-hotels/HotelDataItem";
-import {EmptyListMessage} from "common/components/EmptyListMessage";
-import {getFormattedDate} from "common/utils/getFormattedDate";
-import {SkeletonContainer} from "common/components/preloader/SkeletonItem";
 import {addHotelDataToFav, resetFavoritesHotelsData} from "features/hotels/hotelsSlice";
+import {PreloaderContainer, SkeletonLoader, EmptyListMessage} from "common/components";
+import {useAppDispatch, useAppSelector, useQueryParams} from "common/hooks";
+import {SortControllers} from "./sort-controlers";
+import {HotelDataItem} from "./fav-hotels";
+import s from "../Main.module.scss"
+import Box from "@mui/material/Box";
+
 
 export const Favorites = () => {
     const dispatch = useAppDispatch()
@@ -20,7 +19,7 @@ export const Favorites = () => {
     const [searchParams] = useQueryParams()
     const favoritesHotelsIds = useAppSelector(memoizedHotelsIds)
     const checkIn = searchParams.get("checkIn") || String(getFormattedDate(new Date, "toUTCString"))
-    const [fetchHotel, { isFetching}] = useLazyFetchHotelQuery()
+    const [fetchHotel, {isFetching}] = useLazyFetchHotelQuery()
 
     useEffect(() => {
         dispatch(resetFavoritesHotelsData())
@@ -72,13 +71,14 @@ export const Favorites = () => {
 
             <SortControllers/>
 
-            <Box className={s.hotelsContainer} sx={{alignSelf: "flex-start"}} >
-                {
-                    isFetching ? <SkeletonContainer n={favoritesHotelsIds.length}/>
-                        : favoritesHotelsIds.length > 0
+            <Box className={s.hotelsContainer} sx={{alignSelf: "flex-start"}}>
+                <PreloaderContainer condition={isFetching} loader={<SkeletonLoader n={favoritesHotelsIds.length}/>}>
+                    {
+                        favoritesHotelsIds.length > 0
                             ? mappedHotels
                             : <EmptyListMessage message={"no favorites hotels yet"}/>
-                }
+                    }
+                </PreloaderContainer>
             </Box>
         </Box>
     );

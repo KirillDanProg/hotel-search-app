@@ -1,13 +1,13 @@
 import React, {FC} from 'react';
-import Box from "@mui/material/Box";
 import {IconButton, Rating, Typography} from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import s from "../../Main.module.scss"
-import {HotelResponseType} from "features/hotels/hotelsAPI";
-import {useAppDispatch, useAppSelector} from "common/hooks/redux-hooks";
 import {addHotelToFavorites} from "features/hotels/hotelsSlice";
+import {HotelResponseType} from "features/hotels/hotelsAPI";
+import {useAppDispatch, useAppSelector} from "common/hooks";
 import {selectFavoritesHotels} from "app/selectors";
 import defaultHotelImg from "assets/images/defaultHotelImage.png"
+import s from "../../Main.module.scss"
+import Box from "@mui/material/Box";
 
 type PropsType = {
     data: HotelResponseType

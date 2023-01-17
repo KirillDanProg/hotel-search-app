@@ -1,7 +1,7 @@
 import {AsyncThunk, createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AppStatusType, authMe} from "../login/loginSlice";
-import {getFromLocalStorage, saveToLocalStorage} from "../../common/utils/local-storage copy";
-import {images} from "../../data/images";
+import {getFromLocalStorage, saveToLocalStorage} from "common/utils";
+import {images} from "data/images";
 import {HotelResponseType} from "./hotelsAPI";
 
 

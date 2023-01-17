@@ -2,7 +2,7 @@ import React from "react";
 import Skeleton from "@mui/material/Skeleton";
 import Box from "@mui/material/Box";
 
-export const SkeletonItem = () => {
+const SkeletonItem = () => {
     return (
         <Box sx={boxStyle}>
             <Skeleton width="50%" height={40} sx={{}}/>
@@ -13,7 +13,7 @@ export const SkeletonItem = () => {
         </Box>
     )
 }
-export const SkeletonContainer = (props: { n?: number }) => {
+export const SkeletonLoader = (props: { n?: number }) => {
     return (
         <>
            <SkeletonItem/>

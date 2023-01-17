@@ -1,11 +1,11 @@
 import React from 'react';
 import Box from "@mui/material/Box";
 import commonS from "common/styles/CommonStyles.module.scss"
-import {HotelSearch} from "./hotel-search/HotelSearch";
-import {Favorites} from "./favorites/Favorites";
-import {HotelsContent} from "./hotels-results/HotelsContent";
+import {HotelSearch} from "./hotel-search";
+import {HotelsContent} from "./hotels-results";
+import {Favorites} from "./favorites";
 import s from "./Main.module.scss"
-import {Header} from "../../header/Header";
+import {Header} from "layout/header";
 
 export const MainPage = () => {
     return (

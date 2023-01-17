@@ -1,18 +1,17 @@
 import {useFormik} from "formik";
-import Box from "@mui/material/Box";
 import {boxStyle, buttonStyle} from "common/styles";
-import {InputLabelForm} from "../../login-page/form/InputLabelForm";
-import commonS from "common/styles/CommonStyles.module.scss";
-import Button from "@mui/material/Button";
+import {InputLabelForm} from "layout/pages/login-page/form";
 import {useEffect, useRef} from "react";
-import {useQueryParams} from "common/hooks/useQueryParams";
-import CloseIcon from '@mui/icons-material/Close'
-import {getUrlParams} from "common/utils/getUrlParams copy";
+import {getUrlParams, getFormattedDate} from "common/utils";
+import {useAppDispatch, useQueryParams} from "common/hooks";
 import {useLazyFetchHotelsQuery} from "features/hotels/hotelsAPI";
-import {getFormattedDate} from "common/utils/getFormattedDate";
 import {setData} from "features/hotels/hotelsSlice";
-import {useAppDispatch} from "common/hooks/redux-hooks";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import CloseIcon from '@mui/icons-material/Close'
 import * as yup from "yup";
+import commonS from "common/styles/CommonStyles.module.scss";
+
 
 const validationSchema = yup.object().shape({
     location: yup.string().required('Required'),
@@ -49,7 +48,7 @@ export const HotelSearch = () => {
 
     const cleanField = () => {
         setFieldValue("location", "")
-       ref.current && ref.current.focus()
+        ref.current && ref.current.focus()
     }
 
     useEffect(() => {
@@ -94,11 +93,9 @@ export const HotelSearch = () => {
                 />
                 <Button type="submit" sx={buttonStyle}>search</Button>
             </Box>
-
         </Box>
     )
 }
-
 
 const iconStyle = {
     position: "absolute",

@@ -1,4 +1,4 @@
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import {loginSlice} from "../features/login/loginSlice";
 import {hotelsAPI} from "../features/hotels/hotelsAPI";
 import {hotelsSlice} from "../features/hotels/hotelsSlice";
@@ -18,9 +18,4 @@ export const store = configureStore({
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
+

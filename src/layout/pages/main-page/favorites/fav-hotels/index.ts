@@ -1,0 +1,1 @@
+export {HotelDataItem} from "./HotelDataItem"

@@ -1,16 +1,16 @@
-import Box from "@mui/material/Box";
-import {boxStyle} from "../../../../common/styles";
+import {boxStyle} from "common/styles";
 import {Breadcrumbs, Link, Typography} from "@mui/material";
-import ArrowForward from "@mui/icons-material/ArrowForward";
 import {Hotels} from "./Hotels";
-import {useQueryParams} from "common/hooks/useQueryParams";
-import {getFormattedDate} from "common/utils/getFormattedDate";
-import s from "../Main.module.scss"
+import {useQueryParams} from "common/hooks";
+import {getFormattedDate} from "common/utils";
 import {Carousel} from "../slider/Slider";
+import s from "../Main.module.scss"
+import Box from "@mui/material/Box";
+import ArrowForward from "@mui/icons-material/ArrowForward";
 
 export const HotelsContent = () => {
     const [searchParams] = useQueryParams()
-    const checkInDate = searchParams.get("checkIn") || getFormattedDate(new Date, "toISOString")
+    const checkInDate = searchParams.get("checkIn") || ""
     const city = searchParams.get("location") || "Moscow"
 
     return (
@@ -31,7 +31,6 @@ export const HotelsContent = () => {
             <Carousel/>
 
             <Hotels/>
-
         </Box>
     )
 }
