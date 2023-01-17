@@ -33,7 +33,7 @@ export const Hotels = () => {
     />)
 
     useEffect(() => {
-        const amountOfDays = getAmountOfDays(checkIn, checkOut, "yyyy-mm-dd")
+        const amountOfDays = getAmountOfDays(new Date(checkIn), new Date(checkOut))
         dispatch(setData({amountOfDays}))
     }, [checkIn, checkOut])
 
