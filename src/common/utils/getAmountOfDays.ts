@@ -9,10 +9,15 @@
 //     }
 // }
 
+const errorMessage = "checkOut date can't be less than checkIn date"
 
-export function getAmountOfDays(checkIn: Date, checkOut: Date): number {
+export function getAmountOfDays(checkIn: Date, checkOut: Date): number | typeof errorMessage {
     const oneDay = 1000 * 60 * 60 * 24;
     const start = Date.UTC(checkOut.getFullYear(), checkOut.getMonth(), checkOut.getDate());
     const end = Date.UTC(checkIn.getFullYear(), checkIn.getMonth(), checkIn.getDate());
-    return (start - end) / oneDay;
+    const result = (start - end) / oneDay;
+    if(result >= 0) {
+        return result
+    }
+    return errorMessage
 }
