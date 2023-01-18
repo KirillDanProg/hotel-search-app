@@ -38,9 +38,7 @@ export const Hotels = () => {
     }, [checkIn, checkOut])
 
     useEffect(() => {
-        if (ref.current) {
-            ref && ref.current.scrollIntoView()
-        }
+        if (ref.current) ref && ref.current.scrollIntoView()
     }, [location])
 
     return (
