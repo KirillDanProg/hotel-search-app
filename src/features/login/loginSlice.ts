@@ -45,12 +45,12 @@ export const loginSlice = createSlice({
     }
 });
 
-export const authMe = createAsyncThunk("auth/me", (arg, thunkAPI) => {
+export const authMe = createAsyncThunk("auth/me", (_, {rejectWithValue}) => {
     const userData: { id: string } = getFromLocalStorage("userData")
     if (userData) {
         return userData
     }
-    return thunkAPI.rejectWithValue("you are not authorized")
+    return rejectWithValue("you are not authorized")
 })
 
 export const {login, logout} = loginSlice.actions
