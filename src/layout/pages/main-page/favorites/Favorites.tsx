@@ -31,7 +31,6 @@ export const Favorites = () => {
             }
             const data: any = await fetchHotel(params)
             if (data) {
-                debugger
                 dispatch(addHotelDataToFav(data.data))
             }
         })
