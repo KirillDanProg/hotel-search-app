@@ -26,11 +26,12 @@ export const Favorites = () => {
         favoritesHotelsIds.forEach(async (hotelId) => {
             const params = {
                 hotelId: String(hotelId),
-                checkIn: "2023-01-16",
-                checkOut: "2023-01-17"
+                checkIn: "2023-02-16",
+                checkOut: "2023-02-17"
             }
             const data: any = await fetchHotel(params)
             if (data) {
+                debugger
                 dispatch(addHotelDataToFav(data.data))
             }
         })

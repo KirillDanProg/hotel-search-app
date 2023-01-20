@@ -1,5 +1,5 @@
-import {getAmountOfDays} from "./getAmountOfDays";
-import {getUrlParams} from "./getUrlParams";
+import {getAmountOfDays} from "../common/utils/getAmountOfDays";
+import {getUrlParams} from "../common/utils/getUrlParams";
 
 describe("getAmountOfDays", () => {
     it("returns the number of days between two dates", () => {
