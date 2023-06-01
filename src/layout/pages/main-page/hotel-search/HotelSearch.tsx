@@ -24,16 +24,17 @@ export const HotelSearch = () => {
     const [searchParams, setParams] = useQueryParams()
     const location = searchParams.get("location") || "Moscow"
     const [searchHotels] = useLazyFetchHotelsQuery()
+    const date = new Date()
     //дата заезда из query parameter URL или установить текущую дату
-    const today = searchParams.get("checkIn") || getFormattedDate(new Date, "toISOString")
-    const tomorrow = searchParams.get("checkOut") || today.slice(0, 8) + Number(new Date().getDate() + 1)
+    const defaultCheckIn = searchParams.get("checkIn") || getFormattedDate(date, "toISOString")
+    const tomorrow = new Date(date.getTime() + 24 * 60 * 60 * 1000)
+    const defaultCheckOut = searchParams.get("checkOut") || getFormattedDate(new Date(tomorrow), "toISOString")
     const ref = useRef<HTMLInputElement>(null)
-
     const {touched, errors, handleChange, handleSubmit, values, setFieldValue} = useFormik({
         initialValues: {
             location,
-            checkIn: today,
-            checkOut: tomorrow
+            checkIn: defaultCheckIn,
+            checkOut: defaultCheckOut
         },
         validationSchema,
         onSubmit: ({checkIn, checkOut, location}) => {
@@ -53,8 +54,8 @@ export const HotelSearch = () => {
 
     useEffect(() => {
         setParams("location", values.location)
-        setParams("checkIn", today)
-        setParams("checkOut", String(tomorrow))
+        setParams("checkIn", defaultCheckIn)
+        setParams("checkOut", defaultCheckOut)
         setParams("limit", "6")
         const params = getUrlParams(searchParams)
         searchHotels(params)
@@ -80,7 +81,7 @@ export const HotelSearch = () => {
                                 error={errors.checkIn}
                                 touched={touched.checkIn}
                                 onChange={handleChange}
-                                min={today}
+                                min={defaultCheckIn}
                 />
                 <InputLabelForm id={"checkOut"}
                                 type={"date"}
@@ -89,7 +90,7 @@ export const HotelSearch = () => {
                                 error={errors.checkOut}
                                 touched={touched.checkOut}
                                 onChange={handleChange}
-                                min={tomorrow}
+                                min={defaultCheckOut}
                 />
                 <Button type="submit" sx={buttonStyle}>search</Button>
             </Box>

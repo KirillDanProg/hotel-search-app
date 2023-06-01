@@ -1,4 +1,6 @@
-export const getFormattedDate = (date: Date | string, format: string) => {
+type FormatDateType = 'toISOString' | 'toUTCString' | string
+
+export const getFormattedDate = (date: Date | string, format: FormatDateType) => {
     if(typeof date === "string") {
         return new Date(date).toUTCString().slice(0, 16)
     }

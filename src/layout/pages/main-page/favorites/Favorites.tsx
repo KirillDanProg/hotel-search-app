@@ -20,15 +20,19 @@ export const Favorites = () => {
     const favoritesHotelsIds = useAppSelector(memoizedHotelsIds)
     const checkIn = searchParams.get("checkIn") || String(getFormattedDate(new Date, "toUTCString"))
     const [fetchHotel, {isFetching}] = useLazyFetchHotelQuery()
+    const date = new Date()
+    const todayDate = getFormattedDate(date, 'toISOString')
+    const tomorrowDate = getFormattedDate(new Date(date.getTime() + 24 * 60 * 60 * 1000), 'toISOString')
 
     useEffect(() => {
         dispatch(resetFavoritesHotelsData())
         favoritesHotelsIds.forEach(async (hotelId) => {
             const params = {
                 hotelId: String(hotelId),
-                checkIn: "2023-02-16",
-                checkOut: "2023-02-17"
+                checkIn: todayDate,
+                checkOut: tomorrowDate
             }
+            console.log(new Date())
             const data: any = await fetchHotel(params)
             if (data) {
                 dispatch(addHotelDataToFav(data.data))
