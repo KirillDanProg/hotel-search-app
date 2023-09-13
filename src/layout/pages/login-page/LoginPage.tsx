@@ -2,7 +2,7 @@ import React from 'react';
 import {Box} from "@mui/material";
 import {boxStyle} from "common/styles";
 import bgImage from "assets/images/bg-img.png"
-import {LoginForm} from "./form/LoginForm";
+import {LoginForm} from "./form";
 import commonS from "common/styles/CommonStyles.module.scss"
 import {useAppSelector} from 'common/hooks/redux-hooks';
 import {useRedirectTo} from "common/hooks/useRedirectTo";

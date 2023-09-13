@@ -6,7 +6,7 @@ import {useFormik} from "formik";
 import {InputLabelForm} from "./InputLabelForm";
 import * as yup from "yup";
 import commonS from "common/styles/CommonStyles.module.scss";
-import {useAppDispatch} from "../../../../common/hooks/redux-hooks";
+import {useAppDispatch} from "../../../../common/hooks";
 import {login} from "../../../../features/login/loginSlice";
 
 
@@ -22,7 +22,8 @@ export const LoginForm = () => {
         login: yup.string()
             .email('Invalid email').required('Required'),
         password: yup.string()
-            .min(2, 'The password is too Short!')
+            .trim()
+            .min(8, 'The password is too Short!')
             .max(50, 'The password is too Long!')
             .required('Required'),
     });
